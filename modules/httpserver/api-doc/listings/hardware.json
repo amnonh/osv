@@ -13,7 +13,8 @@
                 {
                     "method": "GET",
                     "summary": "list all present processor features",
-                    "type": "string",
+                    "notes": "",
+                    "responseClass": "CPU_flags",
                     "nickname" : "processorFeatures",
                     "produces": [
                         "application/json"
@@ -41,5 +42,34 @@
                 }
             ]
         }
-    ]
+    ],
+    "models":
+    {
+       "CPU_flags": {
+         "properties": {
+         "sse3": {"type": "boolean"},
+         "ssse3": {"type": "boolean"},
+         "cmpxchg16b": {"type": "boolean"},
+         "sse4_1": {"type": "boolean"},
+         "sse4_2": {"type": "boolean"},
+         "x2apic": {"type": "boolean"},
+         "tsc_deadline": {"type": "boolean"},
+         "xsave": {"type": "boolean"},
+         "avx": {"type": "boolean"},
+         "rdrand": {"type": "boolean"},
+         "clflush": {"type": "boolean"},
+         "fsgsbase": {"type": "boolean"},
+         "repmovsb": {"type": "boolean"},
+         "gbpage": {"type": "boolean"},
+         "invariant_tsc": {"type": "boolean"},
+         "kvm_clocksource": {"type": "boolean"},
+         "kvm_clocksource2": {"type": "boolean"},
+         "kvm_clocksource_stable": {"type": "boolean"},
+         "kvm_pv_eoi": {"type": "boolean"},
+         "xen_clocksource": {"type": "boolean"},
+         "xen_vector_callback": {"type": "boolean"},
+         "xen_pci": {"type": "boolean"}
+         }
+       }
+    }
 }
