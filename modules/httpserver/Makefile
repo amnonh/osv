@@ -104,11 +104,16 @@ check:
 		--key modules/certs/build/client.key \
 		--cacert modules/certs/build/cacert.pem
 
-swagger-ui-lib: swagger-ui/.git
+swagger-ui-lib: swagger-ui/.git swagger-lib
 .PHONY: swagger-ui-lib
 
 swagger-ui/.git:
-	cd $(src) && git submodule update --init -f modules/httpserver/swagger-ui
+	$(call quiet, cd $(src) && git submodule update --init -f modules/httpserver/swagger-ui)
+
+swagger-lib:
+	$(call quiet,cd $(src)/modules/httpserver/swagger-ui && npm install)
+	$(call quiet,cd swagger-ui && npm run-script build)
+.PHONY: swagger-lib
 
 gui: osv-gui/.git
 	$(call quiet,make -C osv-gui)
