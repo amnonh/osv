@@ -37,6 +37,7 @@ STUB_FILES := $(addprefix obj/,$(STUB_CPP_FILES:.cc=.o))
 
 STATIC_LIBS = $(libs-dir)/libboost_program_options.a
 DYN_LIBS = -lpthread -ldl -L$(OSV_BUILD_PATH)/tools -ltools -L$(libs-dir) -lyaml-cpp $(boost-libs)
+ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 ifeq ($(use_host),y)
 	DYN_LIBS += -lssl -lcrypto
@@ -103,6 +104,23 @@ check:
 		--cert modules/certs/build/client.pem \
 		--key modules/certs/build/client.key \
 		--cacert modules/certs/build/cacert.pem
+
+validate-api: swagger-codegen/.git
+
+swagger-codegen/.git:
+	git clone https://github.com/wordnik/swagger-codegen.git
+	cd swagger-codegen && \
+	cat build.sbt | sed -r 's/scalaVersion\s*:=\s*\"2.1[0-9]+\.[0-9]*\"/scalaVersion := "2.11.2"/' | sed 's/^\(crossScalaVersions := Seq.*"2.11.1"\))/\1, "2.11.2")/' > t &&\
+	mv t build.sbt && \
+	./sbt assembly
+
+code-gen-client:
+	echo $(ROOT_DIR)
+	cd $(ROOT_DIR)/swagger-codegen && \
+	./bin/runscala.sh com.wordnik.swagger.codegen.BasicJavaGenerator http://localhost:8000/api-doc key && \
+	cd generated-code/java/ && \
+	mvn package
+.PHONY: code-gen-client
 
 swagger-ui-lib: swagger-ui/.git
 .PHONY: swagger-ui-lib

@@ -28,10 +28,16 @@ class test_httpserver(basetest.Basetest):
     def tearDownClass(cls):
         basetest.Basetest.shutdown()
 
+    @classmethod
+    def validateAPI(self):
+        if os.path.isfile("modules/httpserver/swagger-codegen/target"):
+            subprocess.call(["make", "-f", "modules/httpserver/Makefile", "code-gen-client"])
+
 if __name__ == '__main__':
     basetest.Basetest.set_config(parser)
     basetest.Basetest.start_image()
     del sys.argv[1:]
+    test_httpserver.validateAPI()
     api_tests = unittest.TestLoader().discover(os.path.join(module_base, 'tests', 'api'), pattern='*.py')
     ssl_tests = unittest.TestLoader().discover(os.path.join(module_base, 'tests', 'ssl'), pattern='*.py')
     test_suite = unittest.TestSuite((api_tests, ssl_tests))
