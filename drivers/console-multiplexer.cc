@@ -68,7 +68,9 @@ void console_multiplexer::write_ll(const char *str, size_t len)
         }
     } else {
         _ldisc->write(str, len,
-            [&] (const char *str, size_t len) { drivers_write(str, len); });
+        [&] (const char *str, size_t len) {
+            drivers_write(str, len);
+        });
         drivers_flush();
     }
 }
