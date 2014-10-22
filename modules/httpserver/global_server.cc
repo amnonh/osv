@@ -16,6 +16,7 @@
 #include "api/env.hh"
 #include "api/hardware.hh"
 #include "api/api.hh"
+#include "api/console.hh"
 #include "path_holder.hh"
 #include "api/network.hh"
 #include <iostream>
@@ -131,6 +132,7 @@ void global_server::set_routes()
     api::trace::init(_routes);
     api::env::init(_routes);
     api::api::init(_routes);
+    api::console::init(_routes);
     api::files_mapping::init(_routes);
     api::hardware::init(_routes);
 }

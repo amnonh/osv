@@ -35,6 +35,10 @@
             "description": "Hardware management API"
         },
         {
+            "path": "/../listings/console.json",
+            "description": "Console management API"
+        },
+        {
             "path": "/../listings/network.json",
             "description": "Network API"
         }
