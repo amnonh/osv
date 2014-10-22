@@ -24,6 +24,9 @@ console_multiplexer::console_multiplexer(const termios *tio, console_driver *ear
 void console_multiplexer::driver_add(console_driver *driver)
 {
     _drivers.push_back(driver);
+    if (_started) {
+        driver->start([=] {_ldisc->read_poll(driver);});
+    }
 }
 
 void console_multiplexer::start()
