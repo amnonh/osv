@@ -786,6 +786,7 @@ drivers += arch/$(arch)/early-console.o
 drivers += drivers/console.o
 drivers += drivers/console-multiplexer.o
 drivers += drivers/console-driver.o
+drivers += drivers/memory-console.o
 drivers += drivers/line-discipline.o
 drivers += drivers/clock.o
 drivers += drivers/clock-common.o
